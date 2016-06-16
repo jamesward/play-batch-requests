@@ -1,11 +1,7 @@
 name := "play-batch-requests"
 
-version := "1.0-SNAPSHOT"
+scalaVersion := "2.11.8"
 
-libraryDependencies ++= Seq(
-  jdbc,
-  anorm,
-  cache
-)     
+libraryDependencies += ws
 
-play.Project.playScalaSettings
+lazy val root = (project in file(".")).enablePlugins(PlayScala)
