@@ -35,15 +35,15 @@ class Application @Inject() (ws: WSClient)(implicit ec: ExecutionContext) extend
     // when the results for the previous batches have been completed, start a new batch
     results.flatMap { responses =>
       // create the web requests for this batch
-      val batchFutures: Seq[Future[WSResponse]] = batch.map(ws.url(_).get())
+      val batchFutures: Seq[Future[String]] = batch.map(ws.url(_).get().map(_.body))
 
       // sequence the futures for this batch into a singe future
-      val batchFuture: Future[Seq[WSResponse]] = Future.sequence(batchFutures)
+      val batchFuture: Future[Seq[String]] = Future.sequence(batchFutures)
 
       // when this batch is complete, append the responses to the existing responses
       batchFuture.map { batchResponses =>
         Logger.info("Finished a batch")
-        responses ++ batchResponses.map(_.body)
+        responses ++ batchResponses
       }
     }
   }
