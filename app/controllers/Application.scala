@@ -6,7 +6,7 @@ import play.api._
 import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
-import play.api.libs.ws.{WSClient, WSResponse}
+import play.api.libs.ws.WSClient
 
 class Application @Inject() (ws: WSClient)(implicit ec: ExecutionContext) extends Controller {
 
